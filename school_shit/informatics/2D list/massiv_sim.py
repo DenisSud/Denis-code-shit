@@ -1,0 +1,19 @@
+n = int(input())
+arr = []
+sim = True
+
+for i in range(n):
+    temp = list(map(int, input().split()))
+    arr.append(temp)
+
+
+for i in range(n):
+    for j in range(n):
+        if arr[i][j] != arr[j][i]:
+            sim = False
+            break
+
+if sim == True:
+    print('YES')
+else:
+    print('NO')

@@ -1,0 +1,21 @@
+n, m = (int(i) for i in (list(map(int, input().split()))))
+arr = []
+for i in range(n):
+    temp = list(map(int, input().split()))
+    arr.append(temp)
+    
+max = 0
+max_line = 0
+
+for i in range(n):
+    sum = 0
+    for j in range(m):
+        sum += arr[i][j]
+        
+    if sum>max:
+        max = sum
+        max_line = i
+        
+        
+print(max)
+print(max_line)

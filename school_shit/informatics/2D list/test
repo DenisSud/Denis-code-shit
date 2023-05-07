@@ -1,0 +1,5 @@
+list = [1 ,1, 1]
+string = str()
+for i in range(len(list)):
+    string = string + "     " + str(list[i])
+print(string)
