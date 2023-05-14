@@ -66,24 +66,21 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    if board[0][0] == board[1][0] and board[1][0] == board[2][0]:
+    for row in board:
+        if len(set(row)) == 1 and row[0] != 0:
+            return row[0]
+
+    for col in range(len(board)):
+        if len(set([row[col] for row in board])) == 1 and board[0][col] != 0:
+            return board[0][col]
+
+    if len(set([board[i][i] for i in range(len(board))])) == 1 and board[0][0] != 0:
         return board[0][0]
-    elif board[0][1] == board[1][1] and board[1][1] == board[2][1]:
-        return board[0][1]
-    elif board[0][2] == board[1][2] and board[1][2] == board[2][2]:
-        return board[0][2]
-    elif board[0][0] == board[1][1] and board[1][1] == board[2][2]:
-        return board[0][0]
-    elif board[0][2] == board[1][1] and board[1][1] == board[2][0]:
-        return board[0][2]
-    elif all(i == board[0][0] for i in board[0]):
-        return board[0][0]
-    elif all(i == board[1][0] for i in board[1]):
-        return board[1][0]
-    elif all(i == board[2][0] for i in board[2]):
-        return board[2][0]
-    else:
-        return None
+    if len(set([board[i][len(board)-i-1] for i in range(len(board))])) == 1 and board[0][len(board)-1] != 0:
+        return board[0][len(board)-1]
+
+    return None
+
 
 
 def terminal(board):
@@ -91,7 +88,7 @@ def terminal(board):
     Returns True if game is over, False otherwise.
     """
 
-    if winner(board) is not None or (not any(EMPTY in sublist for sublist in board) and winner(board) is None):
+    if winner(board) is not None or (not any(EMPTY in sublist for sublist in board)):
         return True
     else:
         return False
