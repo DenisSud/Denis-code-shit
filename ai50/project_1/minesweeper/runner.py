@@ -2,7 +2,7 @@ import pygame
 import sys
 import time
 
-from minesweeper  import Minesweeper, MinesweeperAI
+from minesweeper import Minesweeper, MinesweeperAI
 
 HEIGHT = 8
 WIDTH = 8
@@ -21,7 +21,7 @@ size = width, height = 600, 400
 screen = pygame.display.set_mode(size)
 
 # Fonts
-OPEN_SANS = "/Users/denis/Downloads/minesweeper/assets/fonts/OpenSans-Regular.ttf"
+OPEN_SANS = r"assets\fonts\OpenSans-Regular.ttf"
 smallFont = pygame.font.Font(OPEN_SANS, 20)
 mediumFont = pygame.font.Font(OPEN_SANS, 28)
 largeFont = pygame.font.Font(OPEN_SANS, 40)
@@ -34,11 +34,11 @@ cell_size = int(min(board_width / WIDTH, board_height / HEIGHT))
 board_origin = (BOARD_PADDING, BOARD_PADDING)
 
 # Add images
-flag = pygame.image.load("/Users/code_shit/ai50/projects/2022/project_1/minesweeper/assets/images/flag.png")
+flag = pygame.image.load(r"assets\images\flag.png")
 flag = pygame.transform.scale(flag, (cell_size, cell_size))
-mine = pygame.image.load("/Users/code_shit/ai50/projects/2022/project_1/minesweeper/assets/images/mine.png")
+mine = pygame.image.load(r"assets\images\mine.png")
 mine = pygame.transform.scale(mine, (cell_size, cell_size))
-mine_red = pygame.image.load("/Users/code_shit/ai50/projects/2022/project_1/minesweeper/assets/images/mine-red.png")
+mine_red = pygame.image.load(r"assets\images\mine-red.png")
 mine_red = pygame.transform.scale(mine_red, (cell_size, cell_size))
 
 # Detonated mine
