@@ -9,7 +9,7 @@ def generate_text(messages):
         messages=messages,
     )
 
-    return response#[0]["message"]["content"]
+    return response
 
 
 messages = []
