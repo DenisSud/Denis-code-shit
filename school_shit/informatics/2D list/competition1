@@ -8,13 +8,7 @@ max = 0
 max_line = 0
 
 for i in range(n):
-    sum = 0
-    for j in range(m):
-        sum += arr[i][j]
-        
-    if sum>max:
-        max = sum
-        max_line = i
+    
         
         
 print(max)
