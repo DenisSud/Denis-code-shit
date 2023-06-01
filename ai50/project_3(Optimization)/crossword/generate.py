@@ -5,6 +5,8 @@ from crossword import *
 
 class CrosswordCreator():
 
+    domains: dict
+
     def __init__(self, crossword):
         """
         Create new CSP crossword generate.
@@ -99,7 +101,10 @@ class CrosswordCreator():
         (Remove any values that are inconsistent with a variable's unary
          constraints; in this case, the length of the word.)
         """
-        raise NotImplementedError
+        for variable in self.domains():
+            for word in self.domains[variable]:
+                if word != variable.length:
+                    self.domains[variable].remove(word)
 
     def revise(self, x, y):
         """
@@ -110,7 +115,13 @@ class CrosswordCreator():
         Return True if a revision was made to the domain of `x`; return
         False if no revision was made.
         """
-        raise NotImplementedError
+        chainge = False
+        for word in self.domains[x]:
+            if not word in self.crossword.overlaps[x, y]:
+                self.domains[x].remove(word)
+                chainge = True
+
+        return chainge
 
     def ac3(self, arcs=None):
         """
@@ -121,21 +132,46 @@ class CrosswordCreator():
         Return True if arc consistency is enforced and no domains are empty;
         return False if one or more domains end up empty.
         """
-        raise NotImplementedError
+        if arcs is None:
+            # Create a queue with all arcs in the problem
+            arcs = [(x, y) for x in self.crossword.variables for y in self.crossword.neighbors(x)]
+
+        while arcs:
+            x, y = arcs.pop(0)  # Remove the first arc from the queue
+            if self.revise(x, y):
+                if 0 == len(self.domains[x]):
+                    return False  # Empty domain, inconsistency found
+                for neighbor in self.crossword.neighbors(x):
+                    if neighbor != y:
+                        arcs.append((neighbor, x))  # Add arcs (neighbor, x) to the queue
+        return True
 
     def assignment_complete(self, assignment):
         """
         Return True if `assignment` is complete (i.e., assigns a value to each
         crossword variable); return False otherwise.
         """
-        raise NotImplementedError
+        complete = True
+        for variable in assignment:
+            if 1 != len(assignment[variable]):
+                complete = False
+        return complete
 
     def consistent(self, assignment):
         """
         Return True if `assignment` is consistent (i.e., words fit in crossword
         puzzle without conflicting characters); return False otherwise.
         """
-        raise NotImplementedError
+        # overlaping = {["var1", "var2"]: ["i","j"]} # TODO make a dict of overlaping variables and whare they overlap
+        consistant = True
+        for variable in assignment:
+            if 1 != len(assignment[variable]):
+                consistant = False
+        for pair in overlaping:
+            if self.crossword.overlaps[]
+        return consistant
+
+
 
     def order_domain_values(self, var, assignment):
         """
@@ -169,7 +205,6 @@ class CrosswordCreator():
 
 
 def main():
-
     # Check usage
     if len(sys.argv) not in [3, 4]:
         sys.exit("Usage: python generate.py structure words [output]")
