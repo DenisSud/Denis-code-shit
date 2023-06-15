@@ -162,16 +162,15 @@ class CrosswordCreator():
         Return True if `assignment` is consistent (i.e., words fit in crossword
         puzzle without conflicting characters); return False otherwise.
         """
-        # overlaping = {["var1", "var2"]: ["i","j"]} # TODO make a dict of overlaping variables and whare they overlap
         consistant = True
-        for variable in assignment:
-            if 1 != len(assignment[variable]):
+        for var1 in assignment:
+            if 1 != len(assignment[var1]):
                 consistant = False
-        for pair in overlaping:
-            if self.crossword.overlaps[]
+            for var2 in assignment:
+                i, j = self.crossword.overlaps[var1, var2]
+                if assignment[var1][i] != assignment[var2][j]:
+                    consistant = False
         return consistant
-
-
 
     def order_domain_values(self, var, assignment):
         """
@@ -180,7 +179,7 @@ class CrosswordCreator():
         The first value in the list, for example, should be the one
         that rules out the fewest values among the neighbors of `var`.
         """
-        raise NotImplementedError
+
 
     def select_unassigned_variable(self, assignment):
         """
